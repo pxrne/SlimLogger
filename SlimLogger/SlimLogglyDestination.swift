@@ -130,8 +130,9 @@ class SlimLogglyDestination: LogDestination {
     private func sendLogsInBuffer(stringbuffer:[String]) {
         let allMessagesString = stringbuffer.joinWithSeparator("\n")
         self.traceMessage("LOGGLY: will try to post \(allMessagesString)")
-        if let allMessagesData = (allMessagesString as NSString).dataUsingEncoding(NSUTF8StringEncoding) {
-            let urlRequest = NSMutableURLRequest(URL: NSURL(string: SlimLogglyConfig.logglyUrlString)!)
+        if let allMessagesData = (allMessagesString as NSString).dataUsingEncoding(NSUTF8StringEncoding),
+          url = NSURL(string: SlimLogglyConfig.logglyUrlString) {
+            let urlRequest = NSMutableURLRequest(URL: url)
             urlRequest.HTTPMethod = "POST"
             urlRequest.HTTPBody = allMessagesData
             let session = NSURLSession.sharedSession()
